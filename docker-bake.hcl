@@ -52,7 +52,7 @@ target "default" {
         KOHYA_XFORMERS_VERSION = "0.0.23.post1"
         COMFYUI_COMMIT = "537f35c7bc76e611b53102d3b5a2926e46ec7362"
         INVOKEAI_VERSION = "4.2.5"
-        APP_MANAGER_VERSION = "1.2.0"
+        APP_MANAGER_VERSION = "1.2.1"
         CIVITAI_DOWNLOADER_VERSION = "2.1.0"
         VENV_PATH = "/workspace/venvs/${APP}"
     }
