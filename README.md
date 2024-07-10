@@ -18,8 +18,8 @@ Now with SDXL support.
 * Ubuntu 22.04 LTS
 * CUDA 12.1
 * Python 3.10.12
-* Torch 2.3.0
-* xformers 0.0.26.post1
+* Torch 2.3.1
+* xformers 0.0.27
 * [Jupyter Lab](https://github.com/jupyterlab/jupyterlab)
 * [code-server](https://github.com/coder/code-server)
 * [Automatic1111 Stable Diffusion Web UI](
@@ -27,7 +27,7 @@ Now with SDXL support.
 * [Dreambooth extension](
   https://github.com/d8ahazard/sd_dreambooth_extension) 1.0.14
 * [ControlNet extension](
-  https://github.com/Mikubill/sd-webui-controlnet) v1.1.452
+  https://github.com/Mikubill/sd-webui-controlnet) v1.1.454
 * [After Detailer extension](
   https://github.com/Bing-su/adetailer) v24.6.0
 * [Locon extension](
