@@ -51,18 +51,8 @@ COPY a1111/relauncher.py a1111/webui-user.sh a1111/config.json a1111/ui-config.j
 # ADD SDXL styles.csv
 ADD https://raw.githubusercontent.com/Douleb/SDXL-750-Styles-GPT4-/main/styles.csv /stable-diffusion-webui/styles.csv
 
-# Stage 3: ComfyUI Installation
-FROM a1111-install AS comfyui-install
-ARG COMFYUI_COMMIT
-WORKDIR /
-COPY --chmod=755 build/install_comfyui.sh ./
-RUN /install_comfyui.sh && rm /install_comfyui.sh
-
-# Copy ComfyUI Extra Model Paths (to share models with A1111)
-COPY comfyui/extra_model_paths.yaml /ComfyUI/
-
-# Stage 4: InvokeAI Installation
-FROM comfyui-install AS invokeai-install
+# Stage 3: InvokeAI Installation
+FROM a1111-install AS invokeai-install
 ARG INVOKEAI_VERSION
 WORKDIR /
 COPY --chmod=755 build/install_invokeai.sh ./
@@ -71,7 +61,7 @@ RUN /install_invokeai.sh && rm /install_invokeai.sh
 # Copy InvokeAI config file
 COPY invokeai/invokeai.yaml /InvokeAI/
 
-# Stage 5: Kohya_ss Installation
+# Stage 4: Kohya_ss Installation
 FROM invokeai-install AS kohya-install
 ARG KOHYA_VERSION
 ARG KOHYA_TORCH_VERSION
@@ -84,8 +74,18 @@ RUN /install_kohya.sh && rm /install_kohya.sh
 # Copy the accelerate configuration
 COPY kohya_ss/accelerate.yaml ./
 
+# Stage 5: ComfyUI Installation
+FROM kohya-install AS comfyui-install
+ARG COMFYUI_COMMIT
+WORKDIR /
+COPY --chmod=755 build/install_comfyui.sh ./
+RUN /install_comfyui.sh && rm /install_comfyui.sh
+
+# Copy ComfyUI Extra Model Paths (to share models with A1111)
+COPY comfyui/extra_model_paths.yaml /ComfyUI/
+
 # Stage 6: Tensorboard Installation
-FROM kohya-install AS tensorboard-install
+FROM comfyui-install AS tensorboard-install
 WORKDIR /
 COPY --chmod=755 build/install_tensorboard.sh ./
 RUN /install_tensorboard.sh && rm /install_tensorboard.sh

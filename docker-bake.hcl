@@ -11,7 +11,7 @@ variable "APP" {
 }
 
 variable "RELEASE" {
-    default = "6.6.0"
+    default = "6.7.0"
 }
 
 variable "CU_VERSION" {
@@ -50,7 +50,7 @@ target "default" {
         KOHYA_VERSION = "v24.1.4"
         KOHYA_TORCH_VERSION = "2.1.2+cu${CU_VERSION}"
         KOHYA_XFORMERS_VERSION = "0.0.23.post1"
-        COMFYUI_COMMIT = "537f35c7bc76e611b53102d3b5a2926e46ec7362"
+        COMFYUI_COMMIT = "29c2e26724d4982a3e33114eb9064f1a11f4f4ed"
         INVOKEAI_VERSION = "4.2.5"
         APP_MANAGER_VERSION = "1.2.1"
         CIVITAI_DOWNLOADER_VERSION = "2.1.0"
