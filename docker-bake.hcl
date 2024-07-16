@@ -11,7 +11,7 @@ variable "APP" {
 }
 
 variable "RELEASE" {
-    default = "6.8.2"
+    default = "6.8.3"
 }
 
 variable "CU_VERSION" {
@@ -48,7 +48,7 @@ target "default" {
         TORCH_VERSION = "${TORCH_VERSION}+cu${CU_VERSION}"
         XFORMERS_VERSION = "0.0.27"
         WEBUI_VERSION = "v1.9.4"
-        CONTROLNET_COMMIT = "3ff69b9ea32f59ac866780b19a6465f9b9d28053"
+        CONTROLNET_COMMIT = "b63899a654ee2f70d475c259691f35ac67c320d4"
         DREAMBOOTH_COMMIT = "45a12fe5950bf93205b6ef2b7511eb94052a241f"
         CIVITAI_BROWSER_PLUS_VERSION = "v3.5.4"
         KOHYA_VERSION = "v24.1.4"
