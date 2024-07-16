@@ -11,7 +11,7 @@ variable "APP" {
 }
 
 variable "RELEASE" {
-    default = "6.8.0"
+    default = "6.8.1"
 }
 
 variable "CU_VERSION" {
@@ -55,7 +55,7 @@ target "default" {
         KOHYA_TORCH_VERSION = "2.1.2+cu${CU_VERSION}"
         KOHYA_XFORMERS_VERSION = "0.0.23.post1"
         COMFYUI_COMMIT = "7914c47d5afb1c5ffab49d665f9a1ac86a458821"
-        INVOKEAI_VERSION = "4.2.6"
+        INVOKEAI_VERSION = "4.2.6post1"
         APP_MANAGER_VERSION = "1.2.1"
         CIVITAI_DOWNLOADER_VERSION = "2.1.0"
         VENV_PATH = "/workspace/venvs/${APP}"
