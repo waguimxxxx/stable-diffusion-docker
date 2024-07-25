@@ -11,7 +11,7 @@ variable "APP" {
 }
 
 variable "RELEASE" {
-    default = "6.8.3"
+    default = "6.9.0"
 }
 
 variable "CU_VERSION" {
@@ -51,7 +51,7 @@ target "default" {
         CONTROLNET_COMMIT = "b63899a654ee2f70d475c259691f35ac67c320d4"
         DREAMBOOTH_COMMIT = "45a12fe5950bf93205b6ef2b7511eb94052a241f"
         CIVITAI_BROWSER_PLUS_VERSION = "v3.5.4"
-        KOHYA_VERSION = "v24.1.4"
+        KOHYA_VERSION = "v24.1.5"
         KOHYA_TORCH_VERSION = "2.1.2+cu${CU_VERSION}"
         KOHYA_XFORMERS_VERSION = "0.0.23.post1"
         COMFYUI_COMMIT = "33346fd9b8856942187ad8c818498a080a2027b5"
