@@ -18,8 +18,8 @@ Now with SDXL support.
 * Ubuntu 22.04 LTS
 * CUDA 12.1
 * Python 3.10.12
-* Torch 2.3.1
-* xformers 0.0.27
+* Torch 2.4.0
+* xformers 0.0.27.post2
 * [Jupyter Lab](https://github.com/jupyterlab/jupyterlab)
 * [code-server](https://github.com/coder/code-server)
 * [Automatic1111 Stable Diffusion Web UI](
@@ -43,7 +43,7 @@ Now with SDXL support.
 * [Kohya_ss](https://github.com/bmaltais/kohya_ss) v24.1.5
 * [ComfyUI](https://github.com/comfyanonymous/ComfyUI)
 * [ComfyUI Manager](https://github.com/ltdrdata/ComfyUI-Manager)
-* [InvokeAI](https://github.com/invoke-ai/InvokeAI) v4.2.6post1
+* [InvokeAI](https://github.com/invoke-ai/InvokeAI) v4.2.7
 * [sd_xl_base_1.0.safetensors](
   https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/sd_xl_base_1.0.safetensors)
 * [sd_xl_refiner_1.0.safetensors](

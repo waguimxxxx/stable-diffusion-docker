@@ -11,7 +11,7 @@ variable "APP" {
 }
 
 variable "RELEASE" {
-    default = "6.9.0"
+    default = "6.10.0"
 }
 
 variable "CU_VERSION" {
@@ -23,7 +23,7 @@ variable "BASE_IMAGE_REPOSITORY" {
 }
 
 variable "BASE_IMAGE_VERSION" {
-    default = "2.0.0"
+    default = "2.1.1"
 }
 
 variable "CUDA_VERSION" {
@@ -31,7 +31,7 @@ variable "CUDA_VERSION" {
 }
 
 variable "TORCH_VERSION" {
-    default = "2.3.1"
+    default = "2.4.0"
 }
 
 variable "PYTHON_VERSION" {
@@ -46,16 +46,16 @@ target "default" {
         BASE_IMAGE = "${BASE_IMAGE_REPOSITORY}:${BASE_IMAGE_VERSION}-python${PYTHON_VERSION}-cuda${CUDA_VERSION}-torch${TORCH_VERSION}"
         INDEX_URL = "https://download.pytorch.org/whl/cu${CU_VERSION}"
         TORCH_VERSION = "${TORCH_VERSION}+cu${CU_VERSION}"
-        XFORMERS_VERSION = "0.0.27"
+        XFORMERS_VERSION = "0.0.27.post2"
         WEBUI_VERSION = "v1.9.4"
-        CONTROLNET_COMMIT = "b63899a654ee2f70d475c259691f35ac67c320d4"
+        CONTROLNET_COMMIT = "56cec5b2958edf3b1807b7e7b2b1b5186dbd2f81"
         DREAMBOOTH_COMMIT = "45a12fe5950bf93205b6ef2b7511eb94052a241f"
         CIVITAI_BROWSER_PLUS_VERSION = "v3.5.4"
         KOHYA_VERSION = "v24.1.5"
         KOHYA_TORCH_VERSION = "2.1.2+cu${CU_VERSION}"
         KOHYA_XFORMERS_VERSION = "0.0.23.post1"
         COMFYUI_COMMIT = "33346fd9b8856942187ad8c818498a080a2027b5"
-        INVOKEAI_VERSION = "4.2.6post1"
+        INVOKEAI_VERSION = "4.2.7"
         APP_MANAGER_VERSION = "1.2.1"
         CIVITAI_DOWNLOADER_VERSION = "2.1.0"
         VENV_PATH = "/workspace/venvs/${APP}"
