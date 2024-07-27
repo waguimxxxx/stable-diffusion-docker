@@ -23,7 +23,7 @@ Now with SDXL support.
 * [Jupyter Lab](https://github.com/jupyterlab/jupyterlab)
 * [code-server](https://github.com/coder/code-server)
 * [Automatic1111 Stable Diffusion Web UI](
-  https://github.com/AUTOMATIC1111/stable-diffusion-webui) 1.9.4
+  https://github.com/AUTOMATIC1111/stable-diffusion-webui) 1.10.0
 * [Dreambooth extension](
   https://github.com/d8ahazard/sd_dreambooth_extension) 1.0.14
 * [ControlNet extension](
