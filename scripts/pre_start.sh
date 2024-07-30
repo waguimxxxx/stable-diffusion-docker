@@ -2,19 +2,61 @@
 
 export PYTHONUNBUFFERED=1
 export APP="stable-diffusion-webui"
-DOCKER_IMAGE_VERSION_FILE="/workspace/${APP}/docker_image_version"
 
+TEMPLATE_NAME="a1111"
+TEMPLATE_VERSION_FILE="/workspace/${APP}/template.json"
+
+echo "Template name: ${TEMPLATE_NAME}"
 echo "Template version: ${TEMPLATE_VERSION}"
 echo "venv: ${VENV_PATH}"
 
-if [[ -e ${DOCKER_IMAGE_VERSION_FILE} ]]; then
-    EXISTING_VERSION=$(cat ${DOCKER_IMAGE_VERSION_FILE})
+if [[ -e ${TEMPLATE_VERSION_FILE} ]]; then
+    EXISTING_TEMPLATE_NAME=$(jq -r '.template_name // empty' "$TEMPLATE_VERSION_FILE")
+
+    if [[ -n "${EXISTING_TEMPLATE_NAME}" ]]; then
+        if [[ "${EXISTING_TEMPLATE_NAME}" != "${TEMPLATE_NAME}" ]]; then
+            EXISTING_VERSION="0.0.0"
+        else
+            EXISTING_VERSION=$(jq -r '.template_version // empty' "$TEMPLATE_VERSION_FILE")
+        fi
+    else
+        EXISTING_VERSION="0.0.0"
+    fi
 else
     EXISTING_VERSION="0.0.0"
 fi
 
-rsync_with_progress() {
-    stdbuf -i0 -o0 -e0 rsync -au --info=progress2 "$@" | stdbuf -i0 -o0 -e0 tr '\r' '\n' | stdbuf -i0 -o0 -e0 grep -oP '\d+%|\d+.\d+[mMgG]' | tqdm --bar-format='{l_bar}{bar}' --total=100 --unit='%' > /dev/null
+save_template_json() {
+    cat << EOF > ${TEMPLATE_VERSION_FILE}
+{
+    "template_name": "${TEMPLATE_NAME}",
+    "template_version": "${TEMPLATE_VERSION}"
+}
+EOF
+}
+
+sync_directory() {
+    local src_dir="$1"
+    local dst_dir="$2"
+
+    echo "Syncing from $src_dir to $dst_dir"
+
+    # Ensure destination directory exists
+    mkdir -p "$dst_dir"
+
+    # Get total size of source directory
+    local total_size=$(du -sb "$src_dir" | cut -f1)
+
+    # Use parallel tar with fast compression and exclusions
+    tar --use-compress-program="pigz -p 4" \
+        --exclude='*.pyc' \
+        --exclude='__pycache__' \
+        --exclude='*.log' \
+        -cf - -C "$src_dir" . | \
+    pv -s $total_size | \
+    tar --use-compress-program="pigz -p 4" -xf - -C "$dst_dir"
+
+    echo "Sync completed"
 }
 
 sync_apps() {
@@ -23,25 +65,25 @@ sync_apps() {
         # Sync main venv to workspace to support Network volumes
         echo "Syncing main venv to workspace, please wait..."
         mkdir -p ${VENV_PATH}
-        rsync_with_progress --remove-source-files /venv/ ${VENV_PATH}/
+        sync_directory "/venv" "${VENV_PATH}"
 
         # Sync application to workspace to support Network volumes
         echo "Syncing ${APP} to workspace, please wait..."
-        rsync_with_progress --remove-source-files /${APP}/ /workspace/${APP}/
+        sync_directory "/${APP}" "/workspace/${APP}"
 
         # Sync Kohya_ss to workspace to support Network volumes
         echo "Syncing Kohya_ss to workspace, please wait..."
-        rsync_with_progress --remove-source-files /kohya_ss/ /workspace/kohya_ss/
+        sync_directory "/kohya_ss" "/workspace/kohya_ss"
 
         # Sync ComfyUI to workspace to support Network volumes
         echo "Syncing ComfyUI to workspace, please wait..."
-        rsync_with_progress --remove-source-files /ComfyUI/ /workspace/ComfyUI/
+        sync_directory "/ComfyUI" "/workspace/ComfyUI"
 
         # Sync InvokeAI to workspace to support Network volumes
         echo "Syncing InvokeAI to workspace, please wait..."
-        rsync_with_progress --remove-source-files /InvokeAI/ /workspace/InvokeAI/
+        sync_directory "/InvokeAI" "/workspace/InvokeAI"
 
-        echo "${TEMPLATE_VERSION}" > ${DOCKER_IMAGE_VERSION_FILE}
+        save_template_json
         echo "${VENV_PATH}" > "/workspace/${APP}/venv_path"
     fi
 }
