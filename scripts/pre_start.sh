@@ -3,7 +3,7 @@
 export PYTHONUNBUFFERED=1
 export APP="stable-diffusion-webui"
 
-TEMPLATE_NAME="a1111"
+TEMPLATE_NAME="${APP}"
 TEMPLATE_VERSION_FILE="/workspace/${APP}/template.json"
 
 echo "Template name: ${TEMPLATE_NAME}"
