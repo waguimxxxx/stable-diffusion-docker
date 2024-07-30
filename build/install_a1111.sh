@@ -34,8 +34,6 @@ git clone https://github.com/NVIDIA/Stable-Diffusion-WebUI-TensorRT.git extensio
 git clone --depth=1 https://github.com/mcmonkeyprojects/sd-dynamic-thresholding extensions/sd-dynamic-thresholding
 
 # Install dependencies for the various extensions
-cd /stable-diffusion-webui/extensions/sd-webui-controlnet
-pip3 install -r requirements.txt
 cd /stable-diffusion-webui/extensions/deforum
 pip3 install -r requirements.txt
 cd /stable-diffusion-webui/extensions/sd-webui-reactor
@@ -49,9 +47,8 @@ cd /stable-diffusion-webui/extensions/sd_civitai_extension
 pip3 install -r requirements.txt
 cd /stable-diffusion-webui/extensions/sd-dynamic-thresholding
 pip3 install .
-
-# Install dependencies for inpaint anything extension
-pip3 install segment_anything lama_cleaner
+cd /stable-diffusion-webui/extensions/inpaint-anything
+python3 -m install
 
 # Install dependencies for Civitai Browser+ extension
 cd /stable-diffusion-webui/extensions/sd-civitai-browser-plus
@@ -68,6 +65,10 @@ pip3 install polygraphy --extra-index-url https://pypi.ngc.nvidia.com
 pip3 install onnx-graphsurgeon --extra-index-url https://pypi.ngc.nvidia.com
 pip3 install optimum
 pip3 install --force-reinstall protobuf==3.20.2
+
+# Install dependencies for ControlNet extension last so other extensions don't interfere with it
+cd /stable-diffusion-webui/extensions/sd-webui-controlnet
+pip3 install -r requirements.txt
 pip3 cache purge
 deactivate
 
