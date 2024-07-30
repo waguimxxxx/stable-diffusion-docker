@@ -53,6 +53,8 @@ target "default" {
         KOHYA_VERSION = "v24.1.5"
         KOHYA_TORCH_VERSION = "2.1.2+cu${CU_VERSION}"
         KOHYA_XFORMERS_VERSION = "0.0.23.post1"
+        INVOKEAI_TORCH_VERSION = "2.2.2+cu${CU_VERSION}"
+        INVOKEAI_XFORMERS_VERSION = "0.0.25.post1"
         COMFYUI_COMMIT = "66d35c07ce44b07011314ad7a28b2bdbcbb4e4cc"
         INVOKEAI_VERSION = "4.2.7"
         APP_MANAGER_VERSION = "1.2.1"

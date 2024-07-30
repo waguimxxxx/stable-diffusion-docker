@@ -54,6 +54,8 @@ ADD https://raw.githubusercontent.com/Douleb/SDXL-750-Styles-GPT4-/main/styles.c
 # Stage 3: InvokeAI Installation
 FROM a1111-install AS invokeai-install
 ARG INVOKEAI_VERSION
+ARG INVOKEAI_TORCH_VERSION
+ARG INVOKEAI_XFORMERS_VERSION
 WORKDIR /
 COPY --chmod=755 build/install_invokeai.sh ./
 RUN /install_invokeai.sh && rm /install_invokeai.sh
