@@ -6,9 +6,9 @@ export APP="stable-diffusion-webui"
 TEMPLATE_NAME="${APP}"
 TEMPLATE_VERSION_FILE="/workspace/${APP}/template.json"
 
-echo "Template name: ${TEMPLATE_NAME}"
-echo "Template version: ${TEMPLATE_VERSION}"
-echo "venv: ${VENV_PATH}"
+echo "TEMPLATE NAME: ${TEMPLATE_NAME}"
+echo "TEMPLATE VERSION: ${TEMPLATE_VERSION}"
+echo "VENV PATH: ${VENV_PATH}"
 
 if [[ -e ${TEMPLATE_VERSION_FILE} ]]; then
     EXISTING_TEMPLATE_NAME=$(jq -r '.template_name // empty' "$TEMPLATE_VERSION_FILE")
@@ -39,73 +39,77 @@ sync_directory() {
     local src_dir="$1"
     local dst_dir="$2"
 
-    echo "Syncing from $src_dir to $dst_dir"
+    echo "SYNC: Syncing from ${src_dir} to ${dst_dir}, please wait (this can take a few minutes)..."
 
     # Ensure destination directory exists
-    mkdir -p "$dst_dir"
+    mkdir -p "${dst_dir}"
 
     # Check whether /workspace is fuse, overlay, or xfs
     local workspace_fs=$(df -T /workspace | awk 'NR==2 {print $2}')
+    echo "SYNC: File system type: ${workspace_fs}"
 
-    if [ "$workspace_fs" = "fuse" ]; then
-        echo "Using tar and pigz for sync (fuse filesystem detected)"
+    if [ "${workspace_fs}" = "fuse" ]; then
+        echo "SYNC: Using tar and zstd for sync"
 
         # Get total size of source directory
-        local total_size=$(du -sb "$src_dir" | cut -f1)
+        local total_size=$(du -sb "${src_dir}" | cut -f1)
 
-        # Use parallel tar with fast compression and exclusions
-        tar --use-compress-program="pigz -p 4" \
+        # Use parallel tar with zstd compression and exclusions
+        tar --use-compress-program="zstd -T0 -1" \
             --exclude='*.pyc' \
             --exclude='__pycache__' \
             --exclude='*.log' \
-            -cf - -C "$src_dir" . | \
-        pv -s $total_size | \
-        tar --use-compress-program="pigz -p 4" -xf - -C "$dst_dir"
-    elif [ "$workspace_fs" = "overlay" ] || [ "$workspace_fs" = "xfs" ]; then
-        echo "Using rsync for sync ($workspace_fs filesystem detected)"
-        rsync -rlptDu "$src_dir/" "$dst_dir/"
+            -cf - -C "${src_dir}" . | \
+        pv -s ${total_size} | \
+        tar --use-compress-program="zstd -d -T0" -xf - -C "${dst_dir}"
+    elif [ "${workspace_fs}" = "overlay" ] || [ "${workspace_fs}" = "xfs" ]; then
+        echo "SYNC: Using rsync for sync"
+        rsync -rlptDu "${src_dir}/" "${dst_dir}/"
     else
-        echo "Unknown filesystem type for /workspace: $workspace_fs, defaulting to rsync"
-        rsync -rlptDu "$src_dir/" "$dst_dir/"
+        echo "SYNC: Unknown filesystem type (${workspace_fs}) for /workspace, defaulting to rsync"
+        rsync -rlptDu "${src_dir}/" "${dst_dir}/"
     fi
-
-    echo "Sync completed"
 }
 
 sync_apps() {
     # Only sync if the DISABLE_SYNC environment variable is not set
     if [ -z "${DISABLE_SYNC}" ]; then
-        # Sync main venv to workspace to support Network volumes
-        echo "Syncing main venv to workspace, please wait..."
-        mkdir -p ${VENV_PATH}
+        echo "SYNC: Syncing to persistent storage started"
+
+        # Start the timer
+        start_time=$(date +%s)
+
+        echo "SYNC: Sync 1 of 5"
         sync_directory "/venv" "${VENV_PATH}"
-
-        # Sync application to workspace to support Network volumes
-        echo "Syncing ${APP} to workspace, please wait..."
+        echo "SYNC: Sync 2 of 5"
         sync_directory "/${APP}" "/workspace/${APP}"
-
-        # Sync Kohya_ss to workspace to support Network volumes
-        echo "Syncing Kohya_ss to workspace, please wait..."
+        echo "SYNC: Sync 3 of 5"
         sync_directory "/kohya_ss" "/workspace/kohya_ss"
-
-        # Sync ComfyUI to workspace to support Network volumes
-        echo "Syncing ComfyUI to workspace, please wait..."
+        echo "SYNC: Sync 4 of 5"
         sync_directory "/ComfyUI" "/workspace/ComfyUI"
-
-        # Sync InvokeAI to workspace to support Network volumes
-        echo "Syncing InvokeAI to workspace, please wait..."
+        echo "SYNC: Sync 5 of 5"
         sync_directory "/InvokeAI" "/workspace/InvokeAI"
-
         save_template_json
         echo "${VENV_PATH}" > "/workspace/${APP}/venv_path"
+
+        # End the timer and calculate the duration
+        end_time=$(date +%s)
+        duration=$((end_time - start_time))
+
+        # Convert duration to minutes and seconds
+        minutes=$((duration / 60))
+        seconds=$((duration % 60))
+
+        echo "SYNC: Syncing COMPLETE!"
+        printf "SYNC: Time taken: %d minutes, %d seconds\n" ${minutes} ${seconds}
     fi
 }
 
 fix_venvs() {
-    echo "Fixing A1111 Web UI venv..."
+    echo "VENV: Fixing A1111 Web UI venv..."
     /fix_venv.sh /venv ${VENV_PATH}
 
-    echo "Fixing ComfyUI venv..."
+    echo "VENV: Fixing ComfyUI venv..."
     /fix_venv.sh /ComfyUI/venv /workspace/ComfyUI/venv
 }
 
