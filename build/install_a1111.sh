@@ -21,7 +21,6 @@ pip3 install -r requirements_versions.txt
 python3 -c "from launch import prepare_environment; prepare_environment()" --skip-torch-cuda-test
 
 # Clone the Automatic1111 Extensions
-git clone https://github.com/d8ahazard/sd_dreambooth_extension.git extensions/sd_dreambooth_extension
 git clone https://github.com/Mikubill/sd-webui-controlnet.git extensions/sd-webui-controlnet
 git clone --depth=1 https://github.com/deforum-art/sd-webui-deforum.git extensions/deforum
 git clone --depth=1 https://github.com/ashleykleynhans/a1111-sd-webui-locon.git extensions/a1111-sd-webui-locon
@@ -57,16 +56,6 @@ pip3 install segment_anything lama_cleaner
 # Install dependencies for Civitai Browser+ extension
 cd /stable-diffusion-webui/extensions/sd-civitai-browser-plus
 pip3 install send2trash beautifulsoup4 ZipUnicode fake-useragent packaging pysocks
-
-# Set Dreambooth extension version
-cd /stable-diffusion-webui/extensions/sd_dreambooth_extension
-git checkout main
-git reset ${DREAMBOOTH_COMMIT} --hard
-
-# Install the dependencies for the Dreambooth extension
-cd /stable-diffusion-webui/extensions/sd_dreambooth_extension
-pip3 install -r requirements.txt
-pip3 cache purge
 
 # Install dependencies for TensorRT extension
 cd /stable-diffusion-webui/extensions/Stable-Diffusion-WebUI-TensorRT

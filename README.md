@@ -24,8 +24,6 @@ Now with SDXL support.
 * [code-server](https://github.com/coder/code-server)
 * [Automatic1111 Stable Diffusion Web UI](
   https://github.com/AUTOMATIC1111/stable-diffusion-webui) 1.10.0
-* [Dreambooth extension](
-  https://github.com/d8ahazard/sd_dreambooth_extension) 1.0.14
 * [ControlNet extension](
   https://github.com/Mikubill/sd-webui-controlnet) v1.1.455
 * [After Detailer extension](

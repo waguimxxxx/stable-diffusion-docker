@@ -11,7 +11,7 @@ variable "APP" {
 }
 
 variable "RELEASE" {
-    default = "7.0.2"
+    default = "7.1.0"
 }
 
 variable "CU_VERSION" {
@@ -23,7 +23,7 @@ variable "BASE_IMAGE_REPOSITORY" {
 }
 
 variable "BASE_IMAGE_VERSION" {
-    default = "2.1.1"
+    default = "2.2.1"
 }
 
 variable "CUDA_VERSION" {
@@ -49,12 +49,11 @@ target "default" {
         XFORMERS_VERSION = "0.0.27.post2"
         WEBUI_VERSION = "v1.10.0"
         CONTROLNET_COMMIT = "56cec5b2958edf3b1807b7e7b2b1b5186dbd2f81"
-        DREAMBOOTH_COMMIT = "45a12fe5950bf93205b6ef2b7511eb94052a241f"
         CIVITAI_BROWSER_PLUS_VERSION = "v3.5.4"
         KOHYA_VERSION = "v24.1.5"
         KOHYA_TORCH_VERSION = "2.1.2+cu${CU_VERSION}"
         KOHYA_XFORMERS_VERSION = "0.0.23.post1"
-        COMFYUI_COMMIT = "4ba7fa0244badcf901f2b8ddbfb8539c6398672f"
+        COMFYUI_COMMIT = "66d35c07ce44b07011314ad7a28b2bdbcbb4e4cc"
         INVOKEAI_VERSION = "4.2.7"
         APP_MANAGER_VERSION = "1.2.1"
         CIVITAI_DOWNLOADER_VERSION = "2.1.0"
