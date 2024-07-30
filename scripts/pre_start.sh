@@ -44,17 +44,30 @@ sync_directory() {
     # Ensure destination directory exists
     mkdir -p "$dst_dir"
 
-    # Get total size of source directory
-    local total_size=$(du -sb "$src_dir" | cut -f1)
+    # Check whether /workspace is fuse, overlay, or xfs
+    local workspace_fs=$(df -T /workspace | awk 'NR==2 {print $2}')
 
-    # Use parallel tar with fast compression and exclusions
-    tar --use-compress-program="pigz -p 4" \
-        --exclude='*.pyc' \
-        --exclude='__pycache__' \
-        --exclude='*.log' \
-        -cf - -C "$src_dir" . | \
-    pv -s $total_size | \
-    tar --use-compress-program="pigz -p 4" -xf - -C "$dst_dir"
+    if [ "$workspace_fs" = "fuse" ]; then
+        echo "Using tar and pigz for sync (fuse filesystem detected)"
+
+        # Get total size of source directory
+        local total_size=$(du -sb "$src_dir" | cut -f1)
+
+        # Use parallel tar with fast compression and exclusions
+        tar --use-compress-program="pigz -p 4" \
+            --exclude='*.pyc' \
+            --exclude='__pycache__' \
+            --exclude='*.log' \
+            -cf - -C "$src_dir" . | \
+        pv -s $total_size | \
+        tar --use-compress-program="pigz -p 4" -xf - -C "$dst_dir"
+    elif [ "$workspace_fs" = "overlay" ] || [ "$workspace_fs" = "xfs" ]; then
+        echo "Using rsync for sync ($workspace_fs filesystem detected)"
+        rsync -rlptDu --info=progress2 --stats "$src_dir/" "$dst_dir/"
+    else
+        echo "Unknown filesystem type for /workspace: $workspace_fs, defaulting to rsync"
+        rsync -rlptDu --info=progress2 --stats "$src_dir/" "$dst_dir/"
+    fi
 
     echo "Sync completed"
 }
