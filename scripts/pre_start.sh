@@ -186,5 +186,3 @@ if [ ${ENABLE_TENSORBOARD} ];
 then
     /start_tensorboard.sh
 fi
-
-echo "All services have been started"
