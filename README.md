@@ -123,6 +123,7 @@ docker run -d \
   -p 8000:8000 \
   -p 8888:8888 \
   -p 9090:9090 \
+  -e VENV_PATH=/workspace/venvs/a1111 \
   -e JUPYTER_PASSWORD=Jup1t3R! \
   -e ENABLE_TENSORBOARD=1 \
   ashleykza/stable-diffusion-webui:latest
@@ -146,13 +147,13 @@ You can obviously substitute the image name and tag with your own.
 
 ### Environment Variables
 
-| Variable             | Description                                      | Default                                 |
-|----------------------|--------------------------------------------------|-----------------------------------------|
-| VENV_PATH            | Set the path for the Python venv for the app     | /workspace/venvs/stable-diffusion-webui |
-| JUPYTER_LAB_PASSWORD | Set a password for Jupyter lab                   | not set - no password                   |
-| DISABLE_AUTOLAUNCH   | Disable Web UIs from launching automatically     | (not set)                               |
-| DISABLE_SYNC         | Disable syncing if using a RunPod network volume | (not set)                               |
-| ENABLE_TENSORBOARD   | Enables Tensorboard on port 6006                 | enabled                                 |
+| Variable             | Description                                      | Default                |
+|----------------------|--------------------------------------------------|------------------------|
+| VENV_PATH            | Set the path for the Python venv for the app     | /workspace/venvs/a1111 |
+| JUPYTER_LAB_PASSWORD | Set a password for Jupyter lab                   | not set - no password  |
+| DISABLE_AUTOLAUNCH   | Disable Web UIs from launching automatically     | (not set)              |
+| DISABLE_SYNC         | Disable syncing if using a RunPod network volume | (not set)              |
+| ENABLE_TENSORBOARD   | Enables Tensorboard on port 6006                 | enabled                |
 
 ## Logs
 
