@@ -11,7 +11,7 @@ variable "APP" {
 }
 
 variable "RELEASE" {
-    default = "7.2.1"
+    default = "7.2.2"
 }
 
 variable "CU_VERSION" {
@@ -23,7 +23,7 @@ variable "BASE_IMAGE_REPOSITORY" {
 }
 
 variable "BASE_IMAGE_VERSION" {
-    default = "2.2.2"
+    default = "2.2.3"
 }
 
 variable "CUDA_VERSION" {
@@ -55,7 +55,7 @@ target "default" {
         KOHYA_XFORMERS_VERSION = "0.0.23.post1"
         INVOKEAI_TORCH_VERSION = "2.2.2+cu${CU_VERSION}"
         INVOKEAI_XFORMERS_VERSION = "0.0.25.post1"
-        COMFYUI_COMMIT = "66d35c07ce44b07011314ad7a28b2bdbcbb4e4cc"
+        COMFYUI_COMMIT = "e2382b6adb70c65416f3e90a168cbbc5ffe491bd"
         INVOKEAI_VERSION = "4.2.7"
         APP_MANAGER_VERSION = "1.2.1"
         CIVITAI_DOWNLOADER_VERSION = "2.1.0"
