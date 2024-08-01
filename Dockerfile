@@ -1,7 +1,8 @@
 # Stage 1: Base Image
 ARG BASE_IMAGE=ashleykza/a1111:1.10.0.post7
-ARG INDEX_URL
 FROM ${BASE_IMAGE} AS base
+
+ARG INDEX_URL
 
 # Stage 2: InvokeAI Installation
 FROM base AS invokeai-install
