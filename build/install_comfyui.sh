@@ -11,8 +11,8 @@ python3 -m venv --system-site-packages venv
 source venv/bin/activate
 
 # Install torch and xformers
-pip3 install --no-cache-dir torch==${TORCH_VERSION} torchvision torchaudio --index-url ${INDEX_URL}
-pip3 install --no-cache-dir xformers==${XFORMERS_VERSION} --index-url ${INDEX_URL}
+pip3 install --no-cache-dir torch==${COMFYI_TORCH_VERSION} torchvision torchaudio --index-url ${INDEX_URL}
+pip3 install --no-cache-dir xformers==${COMFYI_XFORMERS_VERSION} --index-url ${INDEX_URL}
 
 # Install requirements
 pip3 install -r requirements.txt
