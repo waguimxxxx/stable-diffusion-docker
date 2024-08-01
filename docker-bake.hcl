@@ -35,7 +35,7 @@ target "default" {
     tags = ["${REGISTRY}/${REGISTRY_USER}/${APP}:${RELEASE}"]
     args = {
         RELEASE = "${RELEASE}"
-        BASE_IMAGE = "${BASE_IMAGE_REPOSITORY}:${BASE_IMAGE_VERSION}-python${PYTHON_VERSION}-cuda${CUDA_VERSION}-torch${TORCH_VERSION}"
+        BASE_IMAGE = "${BASE_IMAGE_REPOSITORY}:${BASE_IMAGE_VERSION}"
         INDEX_URL = "https://download.pytorch.org/whl/cu${CU_VERSION}"
 
         KOHYA_VERSION = "v24.1.5"
