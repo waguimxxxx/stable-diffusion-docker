@@ -11,7 +11,7 @@ variable "APP" {
 }
 
 variable "RELEASE" {
-    default = "7.4.1"
+    default = "7.4.2"
 }
 
 variable "CU_VERSION" {
@@ -46,7 +46,7 @@ target "default" {
         INVOKEAI_TORCH_VERSION = "2.2.2+cu${CU_VERSION}"
         INVOKEAI_XFORMERS_VERSION = "0.0.25.post1"
 
-        COMFYUI_COMMIT = "0eea47d58086d31695f3e8e9d7ef36c6a6986faa"
+        COMFYUI_COMMIT = "56f3c660bf79769bbfa003c0e4152dfb50feadc5"
         COMFYUI_TORCH_VERSION = "2.4.0+cu${CU_VERSION}"
         COMFYUI_XFORMERS_VERSION = "0.0.27.post2"
 
